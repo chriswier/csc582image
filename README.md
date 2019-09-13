@@ -15,6 +15,7 @@ VM setup:
     (root) vi /etc/fstab  (and add the following)
        /swapfile swap swap defaults 0 0
          
+  Disable firewalld:  systemctl stop firewalld && systemctl disable firewalld
 
 GIT Repo:
   (chris) cd ~
@@ -54,3 +55,13 @@ Oracle Setup:  https://www.oracle.com/database/technologies/oracle19c-linux-down
      o. Prereqs - let it fix and check them all.
      o. Save DB response:  /home/chris/csc582/dbinstall.rsp
      p. Install!
+
+     q. After install complete, you should have:  Oracle Enterprise Manager Database Express URL:  https://141.216.24.220:5500/em
+     r. SQL Developer:  
+        Username: SYS
+        Password: Despair-Chalk-0
+        Role: SYSDBA
+        Hostname: 141.216.24.220
+        Port: 1521
+        SID: cwiering1
+
