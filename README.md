@@ -24,7 +24,7 @@ GIT Repo:
 Oracle Setup:  https://www.oracle.com/database/technologies/oracle19c-linux-downloads.html
 
   1.  Install apps as root (root)
-     a. yum install git wget xauth xorg-x11-utils compat-libcap1 sysstat ksh libaio-devel smartmontools net-tools compat-libstdc++-33
+     a. yum install git wget xauth xorg-x11-utils compat-libcap1 sysstat ksh libaio-devel smartmontools net-tools compat-libstdc++-33 screen
      b. yum groupinstall "Development Tools"
   2.  Download LINUX.X64_193000_db_home.zip to /usr/local/src
   3.  Unzip it, move all files to /usr/local/src/oracle193000
@@ -65,3 +65,50 @@ Oracle Setup:  https://www.oracle.com/database/technologies/oracle19c-linux-down
         Port: 1521
         SID: cwiering1
 
+     s. Setup autostart:
+       a. vi /etc/oratab  ->  change last N to Y
+       b. Create /etc/init.d/dbora with the following:
+
+#!/bin/sh
+# description: Oracle auto start-stop script.
+#
+# Set ORA_HOME to be equivalent to the $ORACLE_HOME
+# from which you wish to execute dbstart and dbshut;
+#
+# Set ORA_OWNER to the user id of the owner of the
+# Oracle database in ORACLE_HOME.
+
+ORA_HOME=/usr/local/src/oracle193000
+ORA_OWNER=chris
+
+case "$1" in
+'start') 
+    # Start the Oracle databases:
+    # The following command assumes that the oracle login
+    # will not prompt the user for any values
+    # Remove "&" if you don't want startup as a background process.
+    su - $ORA_OWNER -c "$ORA_HOME/bin/dbstart $ORA_HOME" &
+    touch /var/lock/subsys/dbora
+    ;;
+
+'stop')
+    # Stop the Oracle databases:
+    # The following command assumes that the oracle login
+    # will not prompt the user for any values
+    su - $ORA_OWNER -c "$ORA_HOME/bin/dbshut $ORA_HOME" &
+    rm -f /var/lock/subsys/dbora
+    ;;
+esac
+
+--
+    c. chmod 750 /etc/init.d/dbora
+    d.  ln -s /etc/init.d/dbora /etc/rc.d/rc0.d/K01dbora
+        ln -s /etc/init.d/dbora /etc/rc.d/rc3.d/S99dbora
+        ln -s /etc/init.d/dbora /etc/rc.d/rc5.d/S99dbora
+
+COCO Image Dataset download (via http://cocodataset.org/#download )
+  0. (chris) cd ~
+  1. curl https://sdk.cloud.google.com | bash
+    (follow defaults; restart shell when done)
+  2. mkdir train2017
+  3. screen gsutil -m rsync gs://images.cocadataset.org/train2017 train2017
