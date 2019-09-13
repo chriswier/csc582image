@@ -38,12 +38,12 @@ UNIX_GROUP_NAME=chris
 # This is an optional parameter if installing on
 # Windows based Operating System.
 #-------------------------------------------------------------------------------
-INVENTORY_LOCATION=/usr/app/oraInventory
+INVENTORY_LOCATION=/home/oraInventory
 
 #-------------------------------------------------------------------------------
 # Specify the complete path of the Oracle Base. 
 #-------------------------------------------------------------------------------
-ORACLE_BASE=/usr/app/oracle
+ORACLE_BASE=/home/oracle
 
 #-------------------------------------------------------------------------------
 # Specify the installation edition of the component.                     
@@ -330,14 +330,14 @@ oracle.install.db.config.starterdb.storageType=FILE_SYSTEM_STORAGE
 #
 # Applicable only when oracle.install.db.config.starterdb.storage=FILE_SYSTEM_STORAGE 
 #-------------------------------------------------------------------------------
-oracle.install.db.config.starterdb.fileSystemStorage.dataLocation=/usr/app/oracle/oradata
+oracle.install.db.config.starterdb.fileSystemStorage.dataLocation=/home/oracle/oradata
 
 #-------------------------------------------------------------------------------
 # Specify the recovery location.
 #
 # Applicable only when oracle.install.db.config.starterdb.storage=FILE_SYSTEM_STORAGE 
 #-------------------------------------------------------------------------------
-oracle.install.db.config.starterdb.fileSystemStorage.recoveryLocation=/usr/app/oracle/recovery_area
+oracle.install.db.config.starterdb.fileSystemStorage.recoveryLocation=/home/oracle/recovery_area
 
 #-------------------------------------------------------------------------------
 # Specify the existing ASM disk groups to be used for storage.
