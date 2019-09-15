@@ -3,6 +3,7 @@ Oracle DB Setup
 
 Prereqs: Installed Oracle via README.md instructions, connected as DBA in SQL Developer console.
 
+
 1. (sys user,SYSDBA role) Create cwiering admin user 
 ALTER SESSION SET "_ORACLE_SCRIPT"=true;
 CREATE USER cwiering IDENTIFIED BY <fillinpassword>;
@@ -22,11 +23,49 @@ GRANT CREATE SESSION to coco;
 GRANT UNLIMITED TABLESPACE TO coco;
 GRANT CREATE TABLE to coco;
 GRANT CREATE VIEW, CREATE PROCEDURE TO coco;
+GRANT CREATE ANY DIRECTORY TO coco;
 COMMIT;
 
 (Reference: 1, 2)
 
-3. (coco user) Create tables as coco user; connect via SQL Developer
+4. (sys user,SYSDBA role) Create image mediadir
+CREATE OR REPLACE DIRECTORY train2017dir AS '/home/chris/train2017';
+GRANT READ ON DIRECTORY train2017dir TO coco;
+
+(Reference Oracle Image setup #1 Example 9-3)
+
+CREATE TABLE imagefiles (
+  id INTEGER PRIMARY KEY,
+  image ORDSYS.ORDImage 
+);
+LOB(image.source.localData) STORE AS SECUREFILE;
+
+(Reference Oracle Image setup #1 Example 9-17)
+
+CREATE OR REPLACE PROCEDURE load_image(
+  in_id INTEGER,
+  in_dir VARCHAR2,
+  in_fname VARCHAR2)
+AS
+  obj ORDIMAGE;
+  ctx RAW(64) := NULL;
+BEGIN
+  INSERT INTO imagefiles VALUES(
+    in_id, ORDImage('FILE', in_dir, in_fname))
+    RETURNING image INTO obj;
+  obj.import(ctx);
+  UPDATE imagefiles SET image = obj WHERE id = in_id;
+  COMMIT;
+END;
+
+(Reference Oracle Image setup #1 Example 9-18)
+
+# NOTE: Loading images down through Perl later; but uses the basic command of:
+# EXECUTE load_image(<idnum>, 'train2017dir', '<filename.jpg>')
+(Reference Oracle Image setup #1 Example 9-18)
+
+
+4. (coco user) Create tables as coco user; connect via SQL Developer
 CREATE TABLE info (
   year INT,
   version VARCHAR2(200),
@@ -66,7 +105,7 @@ CREATE TABLE caption (
 );
 COMMIT;
 
-4. (sys user,SYSDBA role) Create cocoweb user (for READ ONLY WEB)
+5. (sys user,SYSDBA role) Create cocoweb user (for READ ONLY WEB)
 CREATE USER cocoweb IDENTIFIED BY cocoweb;
 GRANT CREATE SESSION to cocoweb;
 conn coco/coco
