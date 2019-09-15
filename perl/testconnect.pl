@@ -7,7 +7,7 @@ use strict;
 
 # make connection string
 my $dbh = DBI->connect("dbi:Oracle:host=127.0.0.1;sid=cwiering1",
-  'coco','coco') || die("error: " . DBI->errstr);
+  'cocoweb','cocoweb') || die("error: " . DBI->errstr);
 $dbh->{AutoCommit} = 1;
 
 # make a test query

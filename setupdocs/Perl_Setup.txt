@@ -2,7 +2,7 @@ Perl Setup
 -----------------
 
 1. Install prereqs
-yum install perl-CPAN perl-DBI perl-IO-Socket-SSL perl-Config-Simple perl-Test-NoWarnings
+yum install perl-CPAN perl-DBI perl-IO-Socket-SSL perl-Config-Simple perl-Test-NoWarnings perl-JSON
 
 2. CPAN configure
 perl -MCPAN -e shell
@@ -23,5 +23,10 @@ install DBD::Oracle
 5. Test it out (as chris user)
 export ORACLE_HOME=/usr/local/src/oracle193000
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/src/oracle193000/lib/
+cd ~/csc582/perl/testconnect.pl -- should return something
 
+----
+
+JSON test:
+1.  cd ~/csc582/perl/testjsonread.pl -- should pretty-print dump the json
 

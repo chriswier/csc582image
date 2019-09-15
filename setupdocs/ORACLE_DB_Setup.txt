@@ -3,44 +3,18 @@ Oracle DB Setup
 
 Prereqs: Installed Oracle via README.md instructions, connected as DBA in SQL Developer console.
 
-0. Create the tables I need (as SYSDB)
-CREATE TABLE info (
-  year INT,
-  version VARCHAR(200),
-  descrption VARCHAR(500),
-  contributor VARCHAR(200),
-  url VARCHAR(200),
-  date_created DATE,
-);
-
-CREATE TABLE image (
-  id INT PRIMARY KEY,
-  width INT,
-  height INT,
-  file_name VARCHAR(50),
-  license INT,
-  flickr_url VARCHAR(200),
-  coco_url VARCHAR(200),
-  date_captured DATE,
-);
-
-CREATE TABLE license (
-  id INT PRIMARY KEY,
-  name VARCHAR(200),
-  url VARCHAR(200)
-);
-
-1. Create cwiering admin user 
+1. (sys user,SYSDBA role) Create cwiering admin user 
 ALTER SESSION SET "_ORACLE_SCRIPT"=true;
 CREATE USER cwiering IDENTIFIED BY <fillinpassword>;
 GRANT CONNECT to cwiering;
 GRANT CREATE SESSION, GRANT ANY PRIVILEGE TO cwiering;
 GRANT ALL PRIVILEGES TO cwiering;
 GRANT UNLIMITED TABLESPACE TO cwiering;
+COMMIT;
 
 (Reference: 1, 2)
 
-2. Create coco user
+2. (sys user,SYSDBA role) Create coco user
 ALTER SESSION SET "_ORACLE_SCRIPT"=true;
 CREATE USER coco IDENTIFIED BY coco;
 GRANT CONNECT to coco;
@@ -48,10 +22,11 @@ GRANT CREATE SESSION to coco;
 GRANT UNLIMITED TABLESPACE TO coco;
 GRANT CREATE TABLE to coco;
 GRANT CREATE VIEW, CREATE PROCEDURE TO coco;
+COMMIT;
 
 (Reference: 1, 2)
 
-3. (coco) Create tables as coco user; connect via SQL Developer
+3. (coco user) Create tables as coco user; connect via SQL Developer
 CREATE TABLE info (
   year INT,
   version VARCHAR2(200),
@@ -60,6 +35,9 @@ CREATE TABLE info (
   url VARCHAR2(200),
   date_created DATE
 );
+
+# populate the one row
+INSERT INTO "COCO"."INFO" (YEAR, VERSION, DESCRPTION, CONTRIBUTOR, URL, DATE_CREATED) VALUES ('2017', '1.0', 'COCO 2017 Dataset', 'COCOConsortium', 'http://cocodataset.org', TO_DATE('2017-09-01 00:00:00', 'YYYY-MM-DD HH24:MI:SS'))
 
 CREATE TABLE image (
   id INT PRIMARY KEY,
@@ -72,6 +50,9 @@ CREATE TABLE image (
   date_captured DATE
 );
 
+# test image
+INSERT INTO image VALUES('368117,640,425,'000000368117.jpg',4,'http://farm5.staticflickr.com/4143/4747872021_cd8c1ee91b_z.jpg','http://images.cocodataset.org/train2017/000000368117.jpg',TO_DATE('2013-11-16 16:09:53','YYYY-MM-DD HH24:MI:SS'));
+
 CREATE TABLE license (
   id INT PRIMARY KEY,
   name VARCHAR2(200),
@@ -83,8 +64,9 @@ CREATE TABLE caption (
  image_id INT,
  caption VARCHAR2(500)
 );
+COMMIT;
 
-4. (sysdb) Create cocoweb user (for READ ONLY WEB)
+4. (sys user,SYSDBA role) Create cocoweb user (for READ ONLY WEB)
 CREATE USER cocoweb IDENTIFIED BY cocoweb;
 GRANT CREATE SESSION to cocoweb;
 conn coco/coco
@@ -92,6 +74,6 @@ GRANT READ ON info to cocoweb;
 GRANT READ ON license to cocoweb;
 GRANT READ ON caption to cocoweb;
 GRANT READ ON image to cocoweb;
+COMMIT;
 
 (Reference Oracle 2)
-
