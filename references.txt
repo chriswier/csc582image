@@ -4,6 +4,13 @@ ORACLE User setup:
 1 https://chartio.com/resources/tutorials/how-to-create-a-user-and-grant-permissions-in-oracle/
 2 https://blogs.oracle.com/sql/how-to-create-users-grant-them-privileges-and-remove-them-in-oracle-database 
 
+ORACLE Image setup:
+1. https://11g.lqdflying.info/appdev.112/e10777/ch_examples.htm#IMURG11724
+2. https://docs.oracle.com/en/database/oracle/oracle-database/19/adlob/release-changes.html#GUID-C5183403-15D8-4E0B-AC18-4F821D803A43 Deprecated/Unsupported
+
+ORACLE LOB setup:
+1. https://docs.oracle.com/en/database/oracle/oracle-database/19/adlob/working-with-LOBs.html#GUID-F61CA075-8CB1-4E0B-B538-D886F6CAE263 
+
 COCO:
 a cocodataset.org
 b http://cocodataset.org/#format-data
@@ -11,3 +18,5 @@ b http://cocodataset.org/#format-data
 PERL:
 1 https://docs.cs.cf.ac.uk/notes/accessing-oracle-with-perl/
 2 https://metacpan.org/pod/DBD::Oracle
+3 http://blogs.perl.org/users/byterock/2014/01/looking-at-dbi-part-14-i-am-the-blob-not-the-blob.html
+4 https://docstore.mik.ua/orelly/linux/dbi/ch05_03.htm
