@@ -81,6 +81,7 @@ GRANT READ ON info to cocoweb;
 GRANT READ ON license to cocoweb;
 GRANT READ ON caption to cocoweb;
 GRANT READ ON image to cocoweb;
+GRANT READ ON imagefiles to cocoweb;
 COMMIT;
 
 (Reference Oracle 2)
