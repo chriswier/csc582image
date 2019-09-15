@@ -1,0 +1,13 @@
+ORACLE Setup references:
+
+ORACLE User setup:
+1 https://chartio.com/resources/tutorials/how-to-create-a-user-and-grant-permissions-in-oracle/
+2 https://blogs.oracle.com/sql/how-to-create-users-grant-them-privileges-and-remove-them-in-oracle-database 
+
+COCO:
+a cocodataset.org
+b http://cocodataset.org/#format-data
+
+PERL:
+1 https://docs.cs.cf.ac.uk/notes/accessing-oracle-with-perl/
+2 https://metacpan.org/pod/DBD::Oracle

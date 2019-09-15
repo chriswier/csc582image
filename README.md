@@ -111,4 +111,10 @@ COCO Image Dataset download (via http://cocodataset.org/#download )
   1. curl https://sdk.cloud.google.com | bash
     (follow defaults; restart shell when done)
   2. mkdir train2017
-  3. screen gsutil -m rsync gs://images.cocadataset.org/train2017 train2017
+  3. screen gsutil -m rsync gs://images.cocodataset.org/train2017 train2017
+  4. mkdir val2017
+  5. screen -> gsutil -m rsync gs://images.cocodataset.org/val2017 val2017
+  4. mkdir annotations
+  5. wget http://images.cocodataset.org/annotations/annotations_trainval2017.zip
+  6. cd annotations
+  7. unzip annotations_trainval2017.zip .

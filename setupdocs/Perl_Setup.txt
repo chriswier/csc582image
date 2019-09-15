@@ -1,0 +1,27 @@
+Perl Setup
+-----------------
+
+1. Install prereqs
+yum install perl-CPAN perl-DBI perl-IO-Socket-SSL perl-Config-Simple perl-Test-NoWarnings
+
+2. CPAN configure
+perl -MCPAN -e shell
+  a. Auto config?  Yes
+  b. Install approach: manual
+  c. Mirrors - yes
+  d. Quit when complete
+
+3. Source the Oracle information
+export ORACLE_HOME=/usr/local/src/oracle193000
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/src/oracle193000/lib/
+
+4. Install Test::More and DBD::Oracle
+perl -MCPAN -e shell
+install Test::More
+install DBD::Oracle
+
+5. Test it out (as chris user)
+export ORACLE_HOME=/usr/local/src/oracle193000
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/src/oracle193000/lib/
+
+

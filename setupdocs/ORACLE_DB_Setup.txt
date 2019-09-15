@@ -1,0 +1,97 @@
+Oracle DB Setup
+-------------------
+
+Prereqs: Installed Oracle via README.md instructions, connected as DBA in SQL Developer console.
+
+0. Create the tables I need (as SYSDB)
+CREATE TABLE info (
+  year INT,
+  version VARCHAR(200),
+  descrption VARCHAR(500),
+  contributor VARCHAR(200),
+  url VARCHAR(200),
+  date_created DATE,
+);
+
+CREATE TABLE image (
+  id INT PRIMARY KEY,
+  width INT,
+  height INT,
+  file_name VARCHAR(50),
+  license INT,
+  flickr_url VARCHAR(200),
+  coco_url VARCHAR(200),
+  date_captured DATE,
+);
+
+CREATE TABLE license (
+  id INT PRIMARY KEY,
+  name VARCHAR(200),
+  url VARCHAR(200)
+);
+
+1. Create cwiering admin user 
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+CREATE USER cwiering IDENTIFIED BY <fillinpassword>;
+GRANT CONNECT to cwiering;
+GRANT CREATE SESSION, GRANT ANY PRIVILEGE TO cwiering;
+GRANT ALL PRIVILEGES TO cwiering;
+GRANT UNLIMITED TABLESPACE TO cwiering;
+
+(Reference: 1, 2)
+
+2. Create coco user
+ALTER SESSION SET "_ORACLE_SCRIPT"=true;
+CREATE USER coco IDENTIFIED BY coco;
+GRANT CONNECT to coco;
+GRANT CREATE SESSION to coco;
+GRANT UNLIMITED TABLESPACE TO coco;
+GRANT CREATE TABLE to coco;
+GRANT CREATE VIEW, CREATE PROCEDURE TO coco;
+
+(Reference: 1, 2)
+
+3. (coco) Create tables as coco user; connect via SQL Developer
+CREATE TABLE info (
+  year INT,
+  version VARCHAR2(200),
+  descrption VARCHAR2(500),
+  contributor VARCHAR2(200),
+  url VARCHAR2(200),
+  date_created DATE
+);
+
+CREATE TABLE image (
+  id INT PRIMARY KEY,
+  width INT,
+  height INT,
+  file_name VARCHAR2(50),
+  license INT,
+  flickr_url VARCHAR2(200),
+  coco_url VARCHAR2(200),
+  date_captured DATE
+);
+
+CREATE TABLE license (
+  id INT PRIMARY KEY,
+  name VARCHAR2(200),
+  url VARCHAR2(200)
+);
+
+CREATE TABLE caption (
+ id INT PRIMARY KEY,
+ image_id INT,
+ caption VARCHAR2(500)
+);
+
+4. (sysdb) Create cocoweb user (for READ ONLY WEB)
+CREATE USER cocoweb IDENTIFIED BY cocoweb;
+GRANT CREATE SESSION to cocoweb;
+conn coco/coco
+GRANT READ ON info to cocoweb;
+GRANT READ ON license to cocoweb;
+GRANT READ ON caption to cocoweb;
+GRANT READ ON image to cocoweb;
+
+(Reference Oracle 2)
+
