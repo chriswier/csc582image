@@ -1,0 +1,33 @@
+NodeJS Setup for Centos7:
+----------
+
+1. (root) curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
+2. (root) yum install -y nodejs
+3. Verify with:  node --version && npm --version
+4. Install vim syntax highlighting:
+  (root) yum install vim-enhanced
+  (chris) cd ~ && git clone https://github.com/pangloss/vim-javascript.git ~/.vim/bundle/vim-javascript
+  (chris) vim .vimrc
+let g:javascript_plugin_jsdoc = 1
+let g:javascript_plugin_ngdoc = 1
+let g:javascript_plugin_flow = 1
+  (chris) vim .bashrc (add to end)
+alias vi='vim'
+
+
+Tutorial:  reactjs.org/tutorial/tutorial.html Ref 1
+-----------------
+
+1. mkdir -p nodejs/tests
+2. cd nodejs/tests
+3. npx create-react-app my-tutorial-app
+4. cd my-tutorial-app/src/
+5. rm *
+6. vi index.css  (fill in with https://codepen.io/gaearon/pen/oWWQNa?editors=0100 )
+7. vi index.js  (fill in with https://codepen.io/gaearon/pen/oWWQNa?editors=0010 )
+  a.  Add the following to the top:
+  import React from 'react';
+  import ReactDOM from 'react-dom';
+  import './index.css';
+8. cd .. &&  npm start - check on localhost:3000
+

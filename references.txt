@@ -20,3 +20,7 @@ PERL:
 2 https://metacpan.org/pod/DBD::Oracle
 3 http://blogs.perl.org/users/byterock/2014/01/looking-at-dbi-part-14-i-am-the-blob-not-the-blob.html
 4 https://docstore.mik.ua/orelly/linux/dbi/ch05_03.htm
+
+NodeJS:
+1. https://reactjs.org/tutorial/tutorial.html
+
