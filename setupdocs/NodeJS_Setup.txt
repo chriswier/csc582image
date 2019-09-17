@@ -14,6 +14,11 @@ let g:javascript_plugin_flow = 1
   (chris) vim .bashrc (add to end)
 alias vi='vim'
 
+NodeJS node-oracledb install Ref 2 
+(install in directory of your node application)
+----------------
+1. (chris) npm install -g node-oracledb
+
 
 Tutorial:  reactjs.org/tutorial/tutorial.html Ref 1
 -----------------

@@ -23,4 +23,10 @@ PERL:
 
 NodeJS:
 1. https://reactjs.org/tutorial/tutorial.html
+2. https://oracle.github.io/node-oracledb/INSTALL.html#quickstart
+3. https://github.com/oracle/node-oracledb/tree/master/examples
+4. https://github.com/oracle/node-oracledb/blob/master/examples/lobselect.js
+5.  https://www.codexpedia.com/node-js/node-js-http-server-respond-with-an-image-by-request/
+6. https://befused.com/javascript/get-filename-url
+7. https://github.com/oracle/node-oracledb/blob/master/examples/blobhttp.js
 
