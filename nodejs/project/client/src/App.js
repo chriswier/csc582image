@@ -7,7 +7,7 @@ class App extends Component {
   render() {
 
     const headercss = {
-      height: 173,
+      height: 180,
       backgroundColor: '#00274c',
       fontFamily: "Georgia",
       fontSize: 18,
@@ -35,12 +35,26 @@ class App extends Component {
       padding: 5,
       margin: 5,
       marginRight: 10,
+      marginTop: 8,
     }
 
     const spanbold = {
       fontWeight: 'bold',
       fontSize: 26,
       paddingTop: 10,
+    }
+
+    const spansearch = {
+	    backgroundColor: '#00274c',
+	    borderRadius: 8,
+	    display: 'inline-block',
+	    //color: '#ffcd05',
+      color: 'white',
+	    fontFamily: 'Georgia',
+	    fontSize: 16,
+	    fontWeight: 'bold',
+	    padding: '10px 20px',
+	    textDecoration: 'none',
     }
 
     return (
@@ -53,10 +67,10 @@ class App extends Component {
           Chris Wieringa (cwiering@umich.edu)<br />
           Fall 2019 Semester<br />
           Professor: Dr. Halil Bisgin<br /><br />
-          Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React and an Express API.
+          Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend.
           </div>
         <div style={searchcss}>
-          Search
+          <span style={spansearch}>Search:</span>
         </div>
         <div style={{height: 600 }}>Response content</div>
 
