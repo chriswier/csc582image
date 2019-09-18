@@ -31,3 +31,7 @@ NodeJS:
 7. https://github.com/oracle/node-oracledb/blob/master/examples/blobhttp.js
 8. https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/
 9. https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
+
+Website:
+1. https://www.umflint.edu/brand/colors
+2. https://assets.umflint.edu/

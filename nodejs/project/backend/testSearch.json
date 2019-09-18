@@ -1,0 +1,82 @@
+{
+    "images": [
+        {
+            "id": 1,
+            "flickerUrl": "http://flicker.com/abc1.jpg",
+            "cocoUrl": "http://cocodataset.org/abc1.jpg",
+            "width": "640",
+            "height": "480",
+            "captions": [
+                "Caption 1-1",
+                "Caption 1-2",
+                "Caption 1-3",
+                "Caption 1-4",
+                "Caption 1-5"
+            ],
+            "license": "Creative Commons 1"
+        },
+        {
+            "id": 2,
+            "flickerUrl": "http://flicker.com/abc2.jpg",
+            "cocoUrl": "http://cocodataset.org/abc2.jpg",
+            "width": 640,
+            "height": 480,
+            "captions": [
+                "Caption 2-1",
+                "Caption 2-2",
+                "Caption 2-3",
+                "Caption 2-4",
+                "Caption 2-5"
+            ],
+            "license": "Creative Commons 2"
+        },
+        {
+            "id": 3,
+            "flickerUrl": "http://flicker.com/abc3.jpg",
+            "cocoUrl": "http://cocodataset.org/abc3.jpg",
+            "width": 640,
+            "height": 480,
+            "captions": [
+                "Caption 3-1",
+                "Caption 3-2",
+                "Caption 3-3",
+                "Caption 3-4",
+                "Caption 3-5"
+            ],
+            "license": "Creative Commons 3"
+        },
+        {
+            "id": 4,
+            "flickerUrl": "http://flicker.com/abc4.jpg",
+            "cocoUrl": "http://cocodataset.org/abc4.jpg",
+            "width": 640,
+            "height": 480,
+            "captions": [
+                "Caption 4-1",
+                "Caption 4-2",
+                "Caption 4-3",
+                "Caption 4-4",
+                "Caption 4-5"
+            ],
+            "license": "Creative Commons 4"
+        },
+        {
+            "id": 5,
+            "flickerUrl": "http://flicker.com/abc5.jpg",
+            "cocoUrl": "http://cocodataset.org/abc5.jpg",
+            "width": 640,
+            "height": 480,
+            "captions": [
+                "Caption 3-1",
+                "Caption 3-2",
+                "Caption 3-3",
+                "Caption 3-4",
+                "Caption 3-5"
+            ],
+            "license": "Creative Commons 3"
+        }
+    ],
+    "offset": 0,
+    "size": 5,
+    "maxSize": 300
+}
