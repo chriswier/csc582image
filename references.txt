@@ -35,3 +35,4 @@ NodeJS:
 Website:
 1. https://www.umflint.edu/brand/colors
 2. https://assets.umflint.edu/
+3. http://vpcomm.umich.edu/brand/style-guide/design-principles/colors
