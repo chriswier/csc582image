@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
+import SearchForm from './SearchForm.js';
 import logo from './CSIS.Stamp.Vert.eps200x200.jpg';
-
-var ip = require("ip");
 
 // Based loosely on https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
 
 class App extends Component {
 
-  // initialize the state
-  state = {
-    data: [],
-    message: null,
-    search: null,
-    width: null,
-    widthoperator: null,
-    height: null,
-    heightoperator: null,
-  };
+  constructor(props) {
+    super(props);
+    this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
+    this.getDataFromBackend = this.getDataFromBackend.bind(this);
 
+    // initialize the state
+    this.state = {
+      data: [],
+      message: null,
+      searchvalue: 'Test',
+      width: null,
+      widthoperator: null,
+      height: null,
+      heightoperator: null,
+    };
+  }
 
   // when the component mounts, first thing it does is fetch all existing data
   // in our db.  after that we put in polling logic to see if the db has changed
@@ -33,13 +38,24 @@ class App extends Component {
 
   // get the data from the Backend
   getDataFromBackend = () => {
-    
-    fetch('http://' + ip.address() + ':3001/api/search')
+    //fetch('http://' + ip.address() + ':3001/api/search')
+    fetch('http://141.216.24.220:3001/api/search')
       .then((data) => data.json())
       .then((res) => this.setState({ data: res.data }));
    };
 
+   handleSearchChange(value) {
+     this.setState({searchvalue: value});
+   }
+
+   handleSearchSubmit(e) {
+
+   }
+
   render() {
+
+    const util = require('util');
+    const myData = util.inspect(this.state.data, false, null, true);
 
     const headercss = {
       height: 180,
@@ -65,7 +81,7 @@ class App extends Component {
       fontSize: 12,
     }
 
-    const imageFloat = {
+    const logoFloatLeft = {
       float: 'left',
       backgroundColor: 'white',
       padding: 5,
@@ -81,23 +97,10 @@ class App extends Component {
       paddingTop: 10,
     }
 
-    const spansearch = {
-	    backgroundColor: '#00274c',
-	    borderRadius: 8,
-	    display: 'inline-block',
-	    //color: '#ffcd05',
-      color: 'white',
-	    fontFamily: 'Georgia',
-	    fontSize: 16,
-	    fontWeight: 'bold',
-	    padding: '10px 20px',
-	    textDecoration: 'none',
-    }
-
     return (
       <div>
         <div style={{ float: 'left' }}>
-          <img src={logo} style={imageFloat} alt="UMFlint CSIS Logo" />
+          <img src={logo} style={logoFloatLeft} alt="UMFlint CSIS Logo" />
         </div>
         <div style={headercss}>
           <span style={spanbold}>CSC582 SQL Image and NodeJS Project</span><br />
@@ -107,9 +110,9 @@ class App extends Component {
           Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend.
           </div>
         <div style={searchcss}>
-          <span style={spansearch}>Search:</span> 
+          <SearchForm searchvalue={this.searchvalue} onSearchChange={this.handleSearchChange} onSearchSubmit={this.handleSearchSubmit} />
         </div>
-        <div style={{height: 600 }}>Response content</div>
+        <div style={{height: 600 }}>searchvalue: {this.state.searchvalue}<br />data: {myData}</div>
 
         <div style={footercss}>
           <hr />
