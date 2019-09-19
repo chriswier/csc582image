@@ -2,7 +2,8 @@
 UM Flint CSC582 Image Storage in Oracle with NodeJS Web Frontend
 
 Author: Chris Wieringa - cwiering@umich.edu or chris@wieringafamily.com
-Purpose: CSC582 FA19 Oracle SQL Project for Dr. Halil Bisgin
+
+Purpose: CSC582 FA19 Oracle SQL and NodeJS Front/Backend Project for Dr. Halil Bisgin, CSC582, Fall 2019
 
 Learning outcomes:
  1.  Figure out how to store/retrieve images in Oracle natively, and populate/retrieve metadata associated with the images.
