@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import SearchForm from './SearchForm.js';
+import Result from './Result.js';
 import logo from './CSIS.Stamp.Vert.eps200x200.jpg';
+// import axios from 'axios';
 
 // Based loosely on https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
 
@@ -15,12 +17,13 @@ class App extends Component {
     // initialize the state
     this.state = {
       data: [],
-      message: null,
-      searchvalue: 'Test',
-      width: null,
-      widthoperator: null,
-      height: null,
-      heightoperator: null,
+      navigation: null,
+      searchvalue: null,
+      // width: null,
+      // widthoperator: null,
+      // height: null,
+      // heightoperator: null,
+      initial: 1,
     };
   }
 
@@ -38,24 +41,49 @@ class App extends Component {
 
   // get the data from the Backend
   getDataFromBackend = () => {
-    //fetch('http://' + ip.address() + ':3001/api/search')
-    fetch('http://141.216.24.220:3001/api/search')
+    console.log("getDataFromBackend");
+    fetch('http://localhost:3001/api/search')
+      //fetch('http://141.216.24.220:3001/api/search')
       .then((data) => data.json())
       .then((res) => this.setState({ data: res.data }));
-   };
 
-   handleSearchChange(value) {
-     this.setState({searchvalue: value});
-   }
+    // recalculate the navigation bar
+    if (this.state.data.size === 0 || typeof this.state.data.size === 'undefined') {
+      this.setState({ navigation: null });
+    } else {
 
-   handleSearchSubmit(e) {
+      var previous, next;
+      if (this.state.data.offset <= 0) {
+        previous += "&lt;&lt;&lt;";
+      } else {
+        previous += "<a href='blah'>&lt;&lt;&lt;</a>";
+      }
 
-   }
+      if (this.state.data.offset + this.state.data.size >= this.state.data.maxSize) {
+        next += "&gt;&gt;&gt;"
+      } else {
+        next += "<a href='next'>&gt;&gt;&gt;&gt;</a>";
+      }
+
+      let nav = previous + " Navigation " + next;
+      this.setState({ navigation: nav });
+      console.log("Nav: " + this.state.navigation)
+    }
+  }
+
+  handleSearchChange(value) {
+    this.setState({ searchvalue: value });
+  }
+
+  handleSearchSubmit(e) {
+    this.setState({ initial: 0 });
+    console.log("Submit function");
+  }
 
   render() {
 
-    const util = require('util');
-    const myData = util.inspect(this.state.data, false, null, true);
+    //const util = require('util');
+    //const myData = util.inspect(this.state.data, false, null, true);
 
     const headercss = {
       height: 180,
@@ -110,9 +138,11 @@ class App extends Component {
           Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend.
           </div>
         <div style={searchcss}>
-          <SearchForm searchvalue={this.searchvalue} onSearchChange={this.handleSearchChange} onSearchSubmit={this.handleSearchSubmit} />
+          <SearchForm searchvalue={this.searchvalue} onSearchChange={this.handleSearchChange} onSearchSubmit={this.handleSearchSubmit} navigation={this.state.navigation} />
         </div>
-        <div style={{height: 600 }}>searchvalue: {this.state.searchvalue}<br />data: {myData}</div>
+        <div>
+          <Result data={this.state.data} />
+        </div>
 
         <div style={footercss}>
           <hr />

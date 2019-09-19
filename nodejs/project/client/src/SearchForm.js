@@ -40,8 +40,9 @@ class SearchForm extends React.Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <span style={spansearch}>Search: &nbsp;
-        <input type="text" value={searchvalue} onChange={this.handleChange} /> &nbsp; 
-        <input type="submit" value="Submit" />
+          <input type="text" value={searchvalue} onChange={this.handleChange} /> &nbsp; 
+          <input type="submit" value="Submit" />
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {this.props.navigation}
         </span>
       </form>
     );
