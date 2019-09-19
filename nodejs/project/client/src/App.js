@@ -1,9 +1,44 @@
 import React, { Component } from 'react';
 import logo from './CSIS.Stamp.Vert.eps200x200.jpg';
 
+var ip = require("ip");
+
 // Based loosely on https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
 
 class App extends Component {
+
+  // initialize the state
+  state = {
+    data: [],
+    message: null,
+    search: null,
+    width: null,
+    widthoperator: null,
+    height: null,
+    heightoperator: null,
+  };
+
+
+  // when the component mounts, first thing it does is fetch all existing data
+  // in our db.  after that we put in polling logic to see if the db has changed
+  // and update our UI
+  componentDidMount() {
+    this.getDataFromBackend();
+  }
+
+  // kill processes when we are done with it
+  componentWillUnmount() {
+
+  }
+
+  // get the data from the Backend
+  getDataFromBackend = () => {
+    
+    fetch('http://' + ip.address() + ':3001/api/search')
+      .then((data) => data.json())
+      .then((res) => this.setState({ data: res.data }));
+   };
+
   render() {
 
     const headercss = {
@@ -12,7 +47,8 @@ class App extends Component {
       fontFamily: "Georgia",
       fontSize: 18,
       color: '#FFCB05',
-      marginTop: 10,
+      marginTop: 5,
+      paddingTop: 5,
     }
 
     const searchcss = {
@@ -36,6 +72,7 @@ class App extends Component {
       margin: 5,
       marginRight: 10,
       marginTop: 8,
+      marginLeft: 8,
     }
 
     const spanbold = {
@@ -70,7 +107,7 @@ class App extends Component {
           Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend.
           </div>
         <div style={searchcss}>
-          <span style={spansearch}>Search:</span>
+          <span style={spansearch}>Search:</span> 
         </div>
         <div style={{height: 600 }}>Response content</div>
 
