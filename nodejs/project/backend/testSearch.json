@@ -1,7 +1,7 @@
 {
     "images": [
         {
-            "id": 1,
+            "id": 332654,
             "flickerUrl": "http://flicker.com/abc1.jpg",
             "cocoUrl": "http://cocodataset.org/abc1.jpg",
             "width": "640",
@@ -16,7 +16,7 @@
             "license": "Creative Commons 1"
         },
         {
-            "id": 2,
+            "id": 281455,
             "flickerUrl": "http://flicker.com/abc2.jpg",
             "cocoUrl": "http://cocodataset.org/abc2.jpg",
             "width": 640,
@@ -28,10 +28,14 @@
                 "Caption 2-4",
                 "Caption 2-5"
             ],
-            "license": "Creative Commons 2"
+            "license": "Creative Commons 2",
+            "licenseUrl": "http://asdf.com",
+            "file_name": "000000437370.jpg",
+            "date_captured": "2019-01-02",
+            "file_size": "123124124"
         },
         {
-            "id": 3,
+            "id": 38029,
             "flickerUrl": "http://flicker.com/abc3.jpg",
             "cocoUrl": "http://cocodataset.org/abc3.jpg",
             "width": 640,
@@ -46,7 +50,7 @@
             "license": "Creative Commons 3"
         },
         {
-            "id": 4,
+            "id": 17756,
             "flickerUrl": "http://flicker.com/abc4.jpg",
             "cocoUrl": "http://cocodataset.org/abc4.jpg",
             "width": 640,
@@ -61,7 +65,7 @@
             "license": "Creative Commons 4"
         },
         {
-            "id": 5,
+            "id": 380932,
             "flickerUrl": "http://flicker.com/abc5.jpg",
             "cocoUrl": "http://cocodataset.org/abc5.jpg",
             "width": 640,

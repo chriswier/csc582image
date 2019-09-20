@@ -73,6 +73,8 @@ CREATE TABLE imagefiles (
 );
 COMMIT;
 
+CREATE VIEW webinfo (id,width,height,file_name,license,licenseUrl,flickrUrl,cocoUrl,date_captured,file_size) AS SELECT image.id, image.width, image.height, image.file_name, license.name, license.url, image.flickr_url, image.coco_url, image.date_captured, imagefiles.length FROM image, license, imagefiles WHERE image.id = imagefiles.id and image.license = license.id;
+
 5. (sys user,SYSDBA role) Create cocoweb user (for READ ONLY WEB)
 CREATE USER cocoweb IDENTIFIED BY cocoweb;
 GRANT CREATE SESSION to cocoweb;

@@ -42,8 +42,8 @@ class App extends Component {
   // get the data from the Backend
   getDataFromBackend = () => {
     console.log("getDataFromBackend");
-    fetch('http://localhost:3001/api/search')
-      //fetch('http://141.216.24.220:3001/api/search')
+      //fetch('http://localhost:3001/api/search')
+      fetch('http://141.216.24.220:3001/api/search')
       .then((data) => data.json())
       .then((res) => this.setState({ data: res.data }));
 

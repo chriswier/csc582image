@@ -1,11 +1,13 @@
 import React from 'react';
-const util = require('util');
+//const util = require('util');
 
 function ResultEntry(props) {
 
     // variables
-    let filename = util.format("%d.jpg",props.data.id);
-    let imageUrl = "http://localhost:3001/api/pics/" + props.data.id;
+    //let filename = util.format("%d.jpg",props.data.id);
+    let filename = props.data.file_name;
+    //let imageUrl = "http://localhost:3001/api/pics/" + props.data.id;
+    let imageUrl = "http://141.216.24.220:3001/api/pics/" + props.data.id;
     
     // css styling
     const imageStyle = {
@@ -58,7 +60,9 @@ function ResultEntry(props) {
               <span style={spanDescriptionName}>COCO URL: </span><a href={props.data.cocoUrl}>{props.data.cocoUrl}</a><br />
               <span style={spanDescriptionName}>Image Width: </span>{props.data.width}<br />
               <span style={spanDescriptionName}>Image Height: </span>{props.data.height}<br /> 
-              <span style={spanDescriptionName}>License: </span>{props.data.license}<br />
+              <span style={spanDescriptionName}>Date Captured: </span>{props.data.date_captured}<br /> 
+              <span style={spanDescriptionName}>Image Height: </span>{props.data.file_size}<br /> 
+              <span style={spanDescriptionName}>License: </span><a href={props.data.licenseUrl}>{props.data.license}</a><br />
           </div>
         </div>
     )
