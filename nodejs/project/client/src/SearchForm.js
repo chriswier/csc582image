@@ -6,11 +6,16 @@ class SearchForm extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSizeChange = this.handleSizeChange.bind(this);
   }
 
   // event handlers
   handleChange(event) {
     this.props.onSearchChange(event.target.value);
+  }
+
+  handleSizeChange(event) {
+    this.props.onSizeChange(event.target.value);
   }
 
   handleSubmit(event) {
@@ -22,6 +27,8 @@ class SearchForm extends React.Component {
 
     // searchvalue from super
     const searchvalue = this.props.searchvalue;
+    const sizevalue = this.props.size;
+    const navigation = this.props.navigation;
 
     // css styles
     const spansearch = {
@@ -42,7 +49,15 @@ class SearchForm extends React.Component {
         <span style={spansearch}>Search: &nbsp;
           <input type="text" value={searchvalue} onChange={this.handleChange} /> &nbsp; 
           <input type="submit" value="Submit" />
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; {this.props.navigation}
+          &nbsp; &nbsp;Results Shown: &nbsp;
+          <select value={sizevalue} onChange={this.handleSizeChange}>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          &nbsp; &nbsp;{navigation}
         </span>
       </form>
     );

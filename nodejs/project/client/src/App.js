@@ -2,28 +2,35 @@ import React, { Component } from 'react';
 import SearchForm from './SearchForm.js';
 import Result from './Result.js';
 import logo from './CSIS.Stamp.Vert.eps200x200.jpg';
-// import axios from 'axios';
+//import axios from 'axios';
 
 // Based loosely on https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
 
+// global vars
+var host = '141.216.24.220';
+
+// define react
 class App extends Component {
 
   constructor(props) {
     super(props);
     this.handleSearchChange = this.handleSearchChange.bind(this);
+    this.handleSizeChange = this.handleSizeChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.getDataFromBackend = this.getDataFromBackend.bind(this);
 
     // initialize the state
     this.state = {
       data: [],
-      navigation: null,
+      navigation: "<<< Navigation >>>",
       searchvalue: null,
+      searchsize: 5,
       // width: null,
       // widthoperator: null,
       // height: null,
       // heightoperator: null,
       initial: 1,
+      message: 'Please enter a search term above.',
     };
   }
 
@@ -31,7 +38,8 @@ class App extends Component {
   // in our db.  after that we put in polling logic to see if the db has changed
   // and update our UI
   componentDidMount() {
-    this.getDataFromBackend();
+//    this.getDataFromBackend();
+    
   }
 
   // kill processes when we are done with it
@@ -43,7 +51,7 @@ class App extends Component {
   getDataFromBackend = () => {
     console.log("getDataFromBackend");
       //fetch('http://localhost:3001/api/search')
-      fetch('http://141.216.24.220:3001/api/search')
+      fetch('http://' + host + ':3001/api/search')
       .then((data) => data.json())
       .then((res) => this.setState({ data: res.data }));
 
@@ -75,9 +83,50 @@ class App extends Component {
     this.setState({ searchvalue: value });
   }
 
+  handleSizeChange(value) {
+    //console.log('handleSizeChange: ' + value);
+    this.setState({ searchsize: value });
+  }
+
   handleSearchSubmit(e) {
-    this.setState({ initial: 0 });
-    console.log("Submit function");
+
+    // check for null value
+    if(typeof this.state.searchvalue === 'undefined' || 
+       this.state.searchvalue == null) {
+       //console.log("handleSearchSubmit(): empty search submitted.");
+       this.setState({ message: 'Please enter a non-empty search term above.' });
+       return;
+    }
+
+    // otherwise, continue on
+    this.setState({ initial: 0, message : null });
+    //console.log("handleSearchSubmit(): searching for " + this.state.searchvalue);
+
+    // localvariables
+    let offset = 0;
+    if(typeof this.state.data.offset !== 'undefined' &&
+       this.state.data.offset !== null
+    ) { 
+      offset = this.state.data.offset;
+    }
+
+    // make the data to upload
+    let uploaddata = {
+      searchvalue: this.state.searchvalue,
+      searchsize: this.state.searchsize,
+      offset: offset,
+    };
+
+    fetch('http://' + host + ':3001/api/search', {
+          method: 'POST',
+          mode: 'cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(uploaddata),
+    })
+    .then((data) => data.json())
+    .then((res) => this.setState({ data: res }));
+
+    //console.log("afterpost: " + JSON.stringify(this.state));
   }
 
   render() {
@@ -103,10 +152,6 @@ class App extends Component {
       height: 45,
       paddingTop: 5,
       paddingLeft: 5,
-    }
-
-    const footercss = {
-      fontSize: 12,
     }
 
     const logoFloatLeft = {
@@ -135,25 +180,16 @@ class App extends Component {
           Chris Wieringa (cwiering@umich.edu)<br />
           Fall 2019 Semester<br />
           Professor: Dr. Halil Bisgin<br /><br />
-          Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend.
+          Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend. <a href="usage.html">COCO Dataset Terms and Usage</a>
           </div>
         <div style={searchcss}>
-          <SearchForm searchvalue={this.searchvalue} onSearchChange={this.handleSearchChange} onSearchSubmit={this.handleSearchSubmit} navigation={this.state.navigation} />
+          <SearchForm searchvalue={this.searchvalue} onSearchChange={this.handleSearchChange} onSearchSubmit={this.handleSearchSubmit} onSizeChange={this.handleSizeChange} navigation={this.state.navigation} />
+        </div>
+        <div style={{padding: 5}}>
+        {this.state.message}
         </div>
         <div>
           <Result data={this.state.data} />
-        </div>
-
-        <div style={footercss}>
-          <hr />
-          All images and dataset captions, etc are provided from the <a href="http://cocodataset.org">COCO Consortium</a> and are used under Creative Commons Attribution 4.0 License.  The COCO Consortium does not own the copyright of the images. Use of the images must abide by the <a href="https://info.yahoo.com/legal/us/yahoo/utos/utos-173.html">Flickr Terms of Use</a>. The users of the images accept full responsibility for the use of the dataset, including but not limited to the use of any copies of copyrighted images that they may create from the dataset. As required, the following copyright notice is served.<hr />
-          Copyright (c) 2015, COCO Consortium. All rights reserved. Redistribution and use software in source and binary form, with or without modification, are permitted provided that the following conditions are met:
-
-          <ul>
-            <li>Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.</li>
-            <li>Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.</li>
-            <li>Neither the name of the COCO Consortium nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.</li>
-          </ul>THIS SOFTWARE AND ANNOTATIONS ARE PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         </div>
       </div>
     );

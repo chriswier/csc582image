@@ -21,6 +21,9 @@ function ResultEntry(props) {
 
     const resultDiv = {
           backgroundColor: '#f7f7f7',
+          borderColor: '#e5e5e5',
+          borderStyle: 'solid',
+          borderWidth: 'thin',
           borderRadius: 8,
           display: 'inline-block',
           //color: '#ffcd05',
@@ -28,7 +31,8 @@ function ResultEntry(props) {
           fontSize: 16,
           textDecoration: 'none',
           width: '100%',
-          margin: '5px',
+          //margin: '5px',
+          marginBottom: '5px',
     }
 
     const figureStyle = {
@@ -53,7 +57,7 @@ function ResultEntry(props) {
             <img src={imageUrl} alt={props.data.id} style={imageStyle}/>
             <figcaption align="center"><a href={imageUrl}>{filename}</a></figcaption>
           </figure>
-          <div style={{paddingTop: '10px', marginLeft: '-25px'}}>
+          <div style={{paddingTop: '10px', marginLeft: '0px', float: 'left', overflowWrap: 'break-word'}}>
               <span style={spanDescriptionName}>Captions:</span><br />
               {myCaptions}
               <span style={spanDescriptionName}>Flicker URL: </span><a href={props.data.flickerUrl}>{props.data.flickerUrl}</a><br />
@@ -61,7 +65,7 @@ function ResultEntry(props) {
               <span style={spanDescriptionName}>Image Width: </span>{props.data.width}<br />
               <span style={spanDescriptionName}>Image Height: </span>{props.data.height}<br /> 
               <span style={spanDescriptionName}>Date Captured: </span>{props.data.date_captured}<br /> 
-              <span style={spanDescriptionName}>Image Height: </span>{props.data.file_size}<br /> 
+              <span style={spanDescriptionName}>Image Size (bytes): </span>{props.data.file_size}<br /> 
               <span style={spanDescriptionName}>License: </span><a href={props.data.licenseUrl}>{props.data.license}</a><br />
           </div>
         </div>
@@ -75,22 +79,30 @@ class Result extends React.Component {
   }
 
   render() {
+    //console.log("Result-render(props)" + JSON.stringify(this.props));
 
     // bail out if this is too early
-    if(typeof this.props.data.size === 'undefined') {
-        //console.log("Early rendering; no data.  Return null")
+    if(typeof this.props.data === 'undefined' ||
+       typeof this.props.data.size === 'undefined' ||
+       this.props.data.size === null
+    ) {
         return null;
     }
 
     // data from super
     const data = this.props.data;
-    //console.log(data)
+    let offset = Number(data.offset);
+    let maxSize = Number(data.maxSize);
+    let maxResult = Number(data.offset) + Number(data.size);
+    if(maxResult > maxSize) { maxResult = maxSize; }
+
+    //console.log("Result: " + data)
     //console.log("Size: " + data.size)
 
     // if no results, then just return a "Not Found" message
-    if(data.size <= 0) {
+    if(data.maxSize <= 0) {
         return (
-            <h3>No results found. &#9785;</h3>
+            <h3>No results found. :-(</h3>
         );
     }
 
@@ -102,7 +114,7 @@ class Result extends React.Component {
 
         return (
             <div>
-                <h3 style={{paddingLeft: '10px'}}>Displaying results {data.offset * data.size} - {data.size} of {data.maxSize}.</h3>
+                <h3 style={{paddingLeft: '10px'}}>Displaying results {offset} - {maxResult} of {maxSize} total results.</h3>
                 {myResults}
             </div>
         );

@@ -11,6 +11,10 @@ ORACLE Image setup:
 ORACLE LOB setup:
 1. https://docs.oracle.com/en/database/oracle/oracle-database/19/adlob/working-with-LOBs.html#GUID-F61CA075-8CB1-4E0B-B538-D886F6CAE263 
 
+ORACLE Queries:
+1 https://blogs.oracle.com/oraclemagazine/on-rownum-and-limiting-results
+2. 
+
 COCO:
 a cocodataset.org
 b http://cocodataset.org/#format-data
@@ -31,6 +35,7 @@ NodeJS:
 7. https://github.com/oracle/node-oracledb/blob/master/examples/blobhttp.js
 8. https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/
 9. https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
+10. https://codehandbook.org/javascript-date-format/
 
 Website:
 1. https://www.umflint.edu/brand/colors

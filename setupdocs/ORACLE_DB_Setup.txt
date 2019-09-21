@@ -65,6 +65,7 @@ CREATE TABLE caption (
  image_id INT,
  caption VARCHAR2(500)
 );
+CREATE INDEX capindex ON caption(caption) INDEXTYPE IS CTXSYS.CONTEXT;
 
 CREATE TABLE imagefiles (
   id INTEGER PRIMARY KEY,
@@ -84,6 +85,7 @@ GRANT READ ON license to cocoweb;
 GRANT READ ON caption to cocoweb;
 GRANT READ ON image to cocoweb;
 GRANT READ ON imagefiles to cocoweb;
+GRANT READ on webinfo to cocoweb;
 COMMIT;
 
 (Reference Oracle 2)
