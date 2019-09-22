@@ -19,22 +19,6 @@ function ResultEntry(props) {
         fontWeight: 'bold',
     }
 
-    const resultDiv = {
-          backgroundColor: '#f7f7f7',
-          borderColor: '#e5e5e5',
-          borderStyle: 'solid',
-          borderWidth: 'thin',
-          borderRadius: 8,
-          display: 'inline-block',
-          //color: '#ffcd05',
-          fontFamily: 'Georgia',
-          fontSize: 16,
-          textDecoration: 'none',
-          width: '100%',
-          //margin: '5px',
-          marginBottom: '5px',
-    }
-
     const figureStyle = {
         float: 'left',
         marginRight: '15px',
@@ -52,21 +36,21 @@ function ResultEntry(props) {
 
     // return everything
     return(
-        <div style={resultDiv}>
+        <div className="result">
           <figure style={figureStyle}>
             <img src={imageUrl} alt={props.data.id} style={imageStyle}/>
-            <figcaption align="center"><a href={imageUrl}>{filename}</a></figcaption>
+            <figcaption align="center"><a href={imageUrl} target="_blank" rel="noopener noreferrer">{filename}</a></figcaption>
           </figure>
           <div style={{paddingTop: '10px', marginLeft: '0px', float: 'left', overflowWrap: 'break-word'}}>
               <span style={spanDescriptionName}>Captions:</span><br />
               {myCaptions}
-              <span style={spanDescriptionName}>Flicker URL: </span><a href={props.data.flickerUrl}>{props.data.flickerUrl}</a><br />
-              <span style={spanDescriptionName}>COCO URL: </span><a href={props.data.cocoUrl}>{props.data.cocoUrl}</a><br />
+              <span style={spanDescriptionName}>Flicker URL: </span><a href={props.data.flickerUrl} target="_blank" rel="noopener noreferrer">{props.data.flickerUrl}</a><br />
+              <span style={spanDescriptionName}>COCO URL: </span><a href={props.data.cocoUrl} target="_blank" rel="noopener noreferrer">{props.data.cocoUrl}</a><br />
               <span style={spanDescriptionName}>Image Width: </span>{props.data.width}<br />
               <span style={spanDescriptionName}>Image Height: </span>{props.data.height}<br /> 
               <span style={spanDescriptionName}>Date Captured: </span>{props.data.date_captured}<br /> 
               <span style={spanDescriptionName}>Image Size (bytes): </span>{props.data.file_size}<br /> 
-              <span style={spanDescriptionName}>License: </span><a href={props.data.licenseUrl}>{props.data.license}</a><br />
+              <span style={spanDescriptionName}>License: </span><a href={props.data.licenseUrl} target="_blank" rel="noopener noreferrer">{props.data.license}</a><br />
           </div>
         </div>
     )
@@ -91,16 +75,21 @@ class Result extends React.Component {
 
     // data from super
     const data = this.props.data;
-    let offset = Number(data.offset);
+    let realnum = Number(data.offset) + 1;
     let maxSize = Number(data.maxSize);
     let maxResult = Number(data.offset) + Number(data.size);
     if(maxResult > maxSize) { maxResult = maxSize; }
 
     //console.log("Result: " + data)
     //console.log("Size: " + data.size)
+    //console.log("initial: " + this.props.initial);
 
     // if no results, then just return a "Not Found" message
-    if(data.maxSize <= 0) {
+    if(this.props.initial === 1) { return(<span>&nbsp;</span>); }
+
+    else if(this.props.searchinprogress === 1) { return(<span>Searching...</span>); }
+
+    else if(data.maxSize <= 0) {
         return (
             <h3>No results found. :-(</h3>
         );
@@ -114,7 +103,7 @@ class Result extends React.Component {
 
         return (
             <div>
-                <h3 style={{paddingLeft: '10px'}}>Displaying results {offset} - {maxResult} of {maxSize} total results.</h3>
+                <h3 style={{paddingLeft: '10px'}}>Displaying results {realnum} - {maxResult} of {maxSize} total results.</h3>
                 {myResults}
             </div>
         );

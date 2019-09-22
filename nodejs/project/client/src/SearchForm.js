@@ -1,5 +1,51 @@
 import React from 'react';
 
+class Navigation extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.handleNavPrevious = this.handleNavPrevious.bind(this);
+    this.handleNavNext = this.handleNavNext.bind(this);
+  }
+
+  handleNavPrevious(event) {
+    this.props.handleSearchNavPrev(event);
+  }
+
+  handleNavNext(event) {
+    this.props.handleSearchNavNext(event);
+  }
+
+  render() {
+
+    let offset = Number(this.props.data.offset);
+    let size = Number(this.props.data.size);
+    let maxSize = Number(this.props.data.maxSize);
+    
+    let navPrev;
+    if(offset <= 0) {
+      navPrev = '< < <';
+    } else {
+      // eslint-disable-next-line
+      navPrev = <a href='#' onClick={this.handleNavPrevious}>&lt; &lt; &lt;</a>;
+    }
+
+    let navNext;
+    if(offset + size >= maxSize) {
+      navNext = '> > >';
+    } else {
+      // eslint-disable-next-line
+      navNext = <a href="#" onClick={this.handleNavNext}>&gt; &gt; &gt;</a>;
+    }
+
+    //console.log("nav o s m: " + offset + "-" + size + "-" + maxSize);
+
+    return (
+      <span>{navPrev} &nbsp; Navigation &nbsp; {navNext}</span>
+    );
+  };
+}  
+
 class SearchForm extends React.Component {
   constructor(props) {
     super(props);
@@ -7,6 +53,8 @@ class SearchForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSizeChange = this.handleSizeChange.bind(this);
+    this.handleSearchNavPrev = this.handleSearchNavPrev.bind(this);
+    this.handleSearchNavNext = this.handleSearchNavNext.bind(this);
   }
 
   // event handlers
@@ -16,6 +64,14 @@ class SearchForm extends React.Component {
 
   handleSizeChange(event) {
     this.props.onSizeChange(event.target.value);
+  }
+
+  handleSearchNavPrev(event) {
+    this.props.onNavPrev(event.target.value);
+  }
+
+  handleSearchNavNext(event) {
+    this.props.onNavNext(event.target.value);
   }
 
   handleSubmit(event) {
@@ -28,25 +84,11 @@ class SearchForm extends React.Component {
     // searchvalue from super
     const searchvalue = this.props.searchvalue;
     const sizevalue = this.props.size;
-    const navigation = this.props.navigation;
 
-    // css styles
-    const spansearch = {
-          backgroundColor: '#00274c',
-          borderRadius: 8,
-          display: 'inline-block',
-          //color: '#ffcd05',
-          color: 'white',
-          fontFamily: 'Georgia',
-          fontSize: 16,
-          fontWeight: 'bold',
-          padding: '10px 20px',
-          textDecoration: 'none',
-    }
-
+    // the search bar return function
     return (
       <form onSubmit={this.handleSubmit}>
-        <span style={spansearch}>Search: &nbsp;
+        <span className="searchSpan">Search: &nbsp;
           <input type="text" value={searchvalue} onChange={this.handleChange} /> &nbsp; 
           <input type="submit" value="Submit" />
           &nbsp; &nbsp;Results Shown: &nbsp;
@@ -57,7 +99,7 @@ class SearchForm extends React.Component {
             <option value="50">50</option>
             <option value="100">100</option>
           </select>
-          &nbsp; &nbsp;{navigation}
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<Navigation data={this.props.data} handleSearchNavPrev={this.handleSearchNavPrev} handleSearchNavNext={this.handleSearchNavNext} />
         </span>
       </form>
     );

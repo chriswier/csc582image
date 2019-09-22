@@ -50,7 +50,7 @@ async function init() {
 // Handle each web request
 async function handlePicRequest(request, response) { 
   let picnum = request.params.number;
-  console.log("/pic - Finding pictures " + picnum);
+  //console.log("/pic - Finding pictures " + picnum);
 
   // oracle lookup
   let connection;
@@ -90,14 +90,14 @@ async function handlePicRequest(request, response) {
 
 // function to deal with gets; this shouldn't ever get used outside of testing
 async function handleGetSearchRequest(request, response) {
-  console.log("/search - get - return nothing");
+  //console.log("/search - get - return nothing");
   response.json({ success: true, data: { size: 0, maxSize: 0, offset: 0, images: [ ] }});
 }
 
 // main function to deal with posts
 async function handleSearchRequest(request, response) {
-  console.log("/search - request");
-  console.log(request.body);
+  //console.log("/search - request");
+  //console.log(request.body);
 
   // make a default response
   let reply = {
@@ -149,27 +149,19 @@ async function handleSearchRequest(request, response) {
   }
 
   // process the image ids returned
-  //console.log("typeof images" + typeof images);
-  //images.forEach(function(element) {
-  //  console.log(element);
-  //});
-  reply['maxSize'] = images.length;
-  console.log(reply);
+  reply['maxSize'] = Number(images.length);
+  //console.log(reply);
 
   // loop through the images from offset to offset+size
-//  let imageslice = images.slice(request.body.offset,request.body.offset+request.body.size);
-//  console.log("imageslice: " + imageslice);
-//  imageslice.forEach(async function(e) {
-//  images.forEach(function(e) {
   let imagesArray = [];
   let maxLoopVal = Number(offset) + Number(size);  
-  if(Number(size) > images.length) { maxLoopVal = images.length; }
-  console.log("offset: " + offset + " maxLoopVal: " + maxLoopVal);
+  if(Number(maxLoopVal) > Number(images.length)) { 
+    maxLoopVal = Number(images.length); 
+  }
+  //console.log("offset: " + offset + " maxLoopVal: " + maxLoopVal);
 
   for(var i = offset; i < maxLoopVal; i++ ) {
-    //console.log("loop: " + i);
     let imageinfo = await getImageInformation(Number(images[i]));
-    //console.log("checkImageInfo: " + JSON.stringify(imageinfo));
     imagesArray.push(imageinfo);
   }
 
@@ -197,13 +189,11 @@ async function getImageInformation(imageId) {
 
     // if no rows, return an empty set
     if(result.rows.length === 0) {
-      console.log("getImageCaptions - No results found for " + imageId);
+      //console.log("getImageCaptions - No results found for " + imageId);
       return null;
     }
 
     else {
-      //console.log(result.metaData);
-      //console.log(result.rows);
 
       // build the imageinfo hash to pass back
       let imageInfo = {};
@@ -211,7 +201,6 @@ async function getImageInformation(imageId) {
       let rowheaders = ['id','width','height','file_name','license','licenseUrl','flickerUrl','cocoUrl','date_captured','file_size']
 
       rowheaders.forEach(function(e) {
-        //console.log("loop: " + e + "-> " + result.rows[0][count] + "--");
         imageInfo[e] = result.rows[0][count];
         count += 1;
       });
@@ -256,13 +245,11 @@ async function getImageCaptions(imageId) {
 
     // if no rows, return an empty set
     if(result.rows.length === 0) {
-      console.log("getImageCaptions - No results found for " + imageId);
+      //console.log("getImageCaptions - No results found for " + imageId);
       return null;
     }
 
     else {
-      //console.log(result.metaData);
-      //console.log(result.rows);
 
       var myCaptions = [];
       for(i = 0; i < result.rows.length; i++) {
@@ -273,7 +260,6 @@ async function getImageCaptions(imageId) {
     }
   } catch(err) {
     console.error(err.message);
-    //process.exit(1);
   } finally {
     if (connection) {
       try {
@@ -290,7 +276,7 @@ async function searchCaptions(searchvalue) {
 
   // deal with massaging the search values
   let formattedSearchValue = searchvalue.split(' ').join(' AND ');
-  console.log("searchCaptions - formattedSearchValue: " + formattedSearchValue);
+  //console.log("searchCaptions - formattedSearchValue: " + formattedSearchValue);
 
   // oracle lookup
   let connection;
@@ -335,7 +321,7 @@ async function getAllImageIds() {
 
     // if no rows, return an empty set
     if(result.rows.length === 0) {
-      console.log("getAllImageIds - No results found for " + formattedSearchValue);
+      //console.log("getAllImageIds - No results found for " + formattedSearchValue);
       return null;
     }
     else {
@@ -362,7 +348,7 @@ async function closePoolAndExit() {
     // connections are in use, or force it closed after 10 seconds
     // If this hangs, you may need DISABLE_OOB=ON in a sqlnet.ora file
     await oracledb.getPool().close(10);
-    console.log('Pool closed');
+    console.log('Oracle Pool closed');
     process.exit(0);
   } catch(err) {
     console.error(err.message);

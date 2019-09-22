@@ -41,3 +41,4 @@ Website:
 1. https://www.umflint.edu/brand/colors
 2. https://assets.umflint.edu/
 3. http://vpcomm.umich.edu/brand/style-guide/design-principles/colors
+4. https://stackoverflow.com/questions/10845517/how-to-change-the-link-color-in-a-specific-class-for-a-div-css
