@@ -36,3 +36,12 @@ Tutorial:  reactjs.org/tutorial/tutorial.html Ref 1
   import './index.css';
 8. cd .. &&  npm start - check on localhost:3000
 
+## PRODUCTION APP - Manual Startup ##
+1. cd /home/csc582image/nodejs/project
+2. npm start
+
+Autostart directions:
+1. (root) vi /etc/rc.local
+  sudo -iu chris /usr/bin/screen -dmS nodejsproject bash -c '/home/chris/csc582image/nodejs/project/start.sh'
+2. (root) chmod 755 /etc/rc.local
+3. Reboot!
