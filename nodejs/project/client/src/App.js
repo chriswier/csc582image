@@ -177,11 +177,11 @@ class App extends Component {
           <img src={logo} style={logoFloatLeft} alt="UMFlint CSIS Logo" />
         </div>
         <div className="headerBanner">
-          <span style={spanbold}>CSC582 SQL Image and NodeJS Project</span><br />
-          Chris Wieringa (cwiering@umich.edu)<br />
+          <span style={spanbold}>CSC582 SQL Image and NodeJS Project &nbsp; <a href="https://github.com/chriswier/csc582image" target="_blank" rel="noopener noreferrer">(Github)</a></span><br />
+          Chris Wieringa cwiering@umich.edu<br />
           Fall 2019 Semester<br />
           Professor: Dr. Halil Bisgin<br /><br />
-          Provides a searchable interface to the COCO Dataset images.  All images are stored in Oracle SQL as BLOBs, and queried via NodeJS React frontend and an Node Express API backend. <a href="usage.html" target="_blank" rel="noopener noreferrer">COCO Dataset Terms and Usage</a>
+          Provides a searchable interface to the <a href="http://cocodataset.org" target="_blank" rel="noopener noreferrer">COCO Dataset</a> 2017 training images (118,287 images/~19GB data).  All data is stored in Oracle SQL 2019 Standard Edition, and queried via NodeJS React frontend and an Node Express API backend. Images are stored as BLOBs and captions are indexed. <a href="usage.html" target="_blank" rel="noopener noreferrer">COCO Dataset Terms and Usage</a> 
           </div>
         <div className="searchBar">
           <SearchForm searchvalue={this.searchvalue} onSearchChange={this.handleSearchChange} onSearchSubmit={this.handleSearchSubmit} onSizeChange={this.handleSizeChange} onNavNext={this.onNavNext} onNavPrev={this.onNavPrev} data={this.state.data} />
