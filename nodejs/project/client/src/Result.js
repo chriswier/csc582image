@@ -8,6 +8,10 @@ function ResultEntry(props) {
     let filename = props.data.file_name;
     //let imageUrl = "http://localhost:3001/api/pics/" + props.data.id;
     let imageUrl = "http://141.216.24.220:3001/api/pics/" + props.data.id;
+    let imageUrlFixedWidth300 = "http://141.216.24.220:3001/api/pics/" + props.data.id + '?width=300';
+    let imageUrlResize200 = "http://141.216.24.220:3001/api/pics/" + props.data.id + '?resize=200';
+    let imageUrlResize50 = "http://141.216.24.220:3001/api/pics/" + props.data.id + '?resize=50';
+    let imageUrlGrey = "http://141.216.24.220:3001/api/pics/" + props.data.id + '?greyscale=true';
     
     // css styling
     const imageStyle = {
@@ -38,10 +42,10 @@ function ResultEntry(props) {
     return(
         <div className="result">
           <figure style={figureStyle}>
-            <img src={imageUrl} alt={props.data.id} style={imageStyle}/>
+            <img src={imageUrlFixedWidth300} alt={props.data.id} style={imageStyle}/>
             <figcaption align="center"><a href={imageUrl} target="_blank" rel="noopener noreferrer">{filename}</a></figcaption>
           </figure>
-          <div style={{paddingTop: '10px', marginLeft: '0px', float: 'left', overflowWrap: 'break-word'}}>
+          <div className="resultInfo">
               <span style={spanDescriptionName}>Captions:</span><br />
               {myCaptions}
               <span style={spanDescriptionName}>Flicker URL: </span><a href={props.data.flickerUrl} target="_blank" rel="noopener noreferrer">{props.data.flickerUrl}</a><br />
@@ -50,6 +54,7 @@ function ResultEntry(props) {
               <span style={spanDescriptionName}>Image Height: </span>{props.data.height}<br /> 
               <span style={spanDescriptionName}>Date Captured: </span>{props.data.date_captured}<br /> 
               <span style={spanDescriptionName}>Image Size (bytes): </span>{props.data.file_size}<br /> 
+              <span style={spanDescriptionName}>NodeJS Image Manipulations: </span>Size <a href={imageUrlResize50} target="_blank" rel="noopener noreferrer">50%</a> <a href={imageUrl} target="_blank" rel="noopener noreferrer">100%</a> <a href={imageUrlResize200} target="_blank" rel="noopener noreferrer">200%</a> - <a href={imageUrlGrey} target="_blank" rel="noopener noreferrer">Greyscale</a><br />
               <span style={spanDescriptionName}>License: </span><a href={props.data.licenseUrl} target="_blank" rel="noopener noreferrer">{props.data.license}</a><br />
           </div>
         </div>

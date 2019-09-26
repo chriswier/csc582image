@@ -37,6 +37,11 @@ NodeJS:
 9. https://medium.com/javascript-in-plain-english/full-stack-mongodb-react-node-js-express-js-in-one-simple-app-6cc8ed6de274
 10. https://codehandbook.org/javascript-date-format/
 
+NodeJS Sharp
+1.  https://github.com/lovell/sharp
+2.  http://sharp.pixelplumbing.com/en/stable/api-input/
+
+
 Website:
 1. https://www.umflint.edu/brand/colors
 2. https://assets.umflint.edu/

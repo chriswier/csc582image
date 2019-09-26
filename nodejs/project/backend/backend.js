@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 var cors = require('cors');
 var oracledb = require('oracledb');
+const sharp = require('sharp');
 
 // force all BLOBS to be returned as Buffers
 oracledb.fetchAsBuffer = [ oracledb.BLOB ];
@@ -72,8 +73,102 @@ async function handlePicRequest(request, response) {
       if(blob === null) {
         throw new Error("BLOB from db was null.");
       }
-      response.writeHead(200, { 'Content-Type': 'image/jpeg' });
-      response.end(blob); // write the image out
+
+      // figure out if I have any image manipulation to do with sharp
+      // 1. do a resize to a percent - receive in the 'resize' query param
+      //    and resize to the specific percent
+      let resizeHeight = request.query.height;
+      let grayscale = request.query.grayscale;
+        
+      //if(typeof resizePercent !== undefined && resizePercent !== null) {
+      if("resize" in request.query) {
+        let resizePercent = request.query.resize;
+        let resizePercentNumeric = Number(resizePercent) * 0.01;
+        // perform the resize
+        console.log("resizing " + picnum + " to " + resizePercentNumeric);
+        let image = await sharp(blob);
+        image
+          .metadata()
+          .then(function(metadata) {
+            //console.log("metadata: " + JSON.stringify(metadata));
+            //console.log("metadata.width: " + metadata.width);
+            let newWidth = Math.round(metadata.width * resizePercentNumeric);
+            //console.log("newWidth: " + newWidth);
+            return image
+              .resize({width: newWidth})
+              .jpeg()
+              .toBuffer();
+          })
+          .then(function(data) {
+            response.end(data); // write the image out
+            return;
+          });
+      }
+
+      // 2. do a resize based off a new given width
+      //else if(typeof resizeWidth !== undefined && resizeWidth !== null) {
+      else if("width" in request.query) {
+        let resizeWidth = Number(request.query.width);
+        let image = await sharp(blob);
+        image
+          .metadata()
+          .then(function(metadata) {
+            console.log("width resizing " + picnum + " from " + metadata.width + " to " + resizeWidth);
+            return image
+              .resize({width: resizeWidth})
+              .jpeg()
+              .toBuffer();
+          })
+          .then(function(data) {
+            response.end(data); // write the image out
+            return;
+          });
+      }
+
+      // 3. do a resize based off a new given height
+      else if("height" in request.query) {
+        let resizeHeight = Number(request.query.height);
+        let image = await sharp(blob);
+        image
+          .metadata()
+          .then(function(metadata) {
+            console.log("height resizing " + picnum + " from " + metadata.width + " to " + resizeHeight);
+            return image
+              .resize({height: resizeHeight})
+              .jpeg()
+              .toBuffer();
+          })
+          .then(function(data) {
+            response.end(data); // write the image out
+            return;
+          });
+      }
+
+      // 4. do a greyscale image
+      else if("greyscale" in request.query) {
+        let image = await sharp(blob);
+        image
+          .metadata()
+          .then(function(metadata) {
+            console.log("greyscale " + picnum);
+            return image
+              .gamma()
+              .grayscale()
+              .jpeg()
+              .toBuffer();
+          })
+          .then(function(data) {
+            response.end(data); // write the image out
+            return;
+          });
+      }
+     
+      // no matter what, return the blob 
+      else {
+        //console.log("Default return");
+        response.writeHead(200, { 'Content-Type': 'image/jpeg' });
+        response.end(blob); // write the image out
+      }
     } 
   } catch (err) {
     console.error(err);

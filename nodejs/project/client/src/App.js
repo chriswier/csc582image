@@ -176,7 +176,7 @@ class App extends Component {
         <div style={{ float: 'left' }}>
           <img src={logo} style={logoFloatLeft} alt="UMFlint CSIS Logo" />
         </div>
-        <div className="headerBanner">
+        <div class="headerBanner">
           <span style={spanbold}>CSC582 SQL Image and NodeJS Project &nbsp; <a href="https://github.com/chriswier/csc582image" target="_blank" rel="noopener noreferrer">(Github)</a></span><br />
           Chris Wieringa cwiering@umich.edu<br />
           Fall 2019 Semester<br />

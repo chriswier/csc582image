@@ -12,7 +12,7 @@ a, a:visited, a:focus, a:link, a:active, a:hover {
   padding-top: 5px;
 }
 
-.headerBanner a:link,a:visited {
+.headerBanner a:link, .headerBanner a:visited {
   color: #FFFFFF;
 }
 
@@ -28,7 +28,7 @@ a, a:visited, a:focus, a:link, a:active, a:hover {
   text-decoration: none;
 }
 
-.searchSpan a:link,a:visited {
+.searchSpan a:link, .searchSpan a:visited {
   color: #FFFFFF;
 }
 
@@ -55,3 +55,10 @@ a, a:visited, a:focus, a:link, a:active, a:hover {
   width: 100%;
   margin-bottom: 5px;
 }
+
+.resultInfo {
+  padding-top: 10px;
+  margin-left: 0px;
+  float: left;
+}
+
